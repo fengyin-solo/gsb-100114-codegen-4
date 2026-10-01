@@ -70,7 +70,7 @@ import { request } from '@/api/client'
 type Row = Record<string, string | number | null>
 
 const ENDPOINT = '/api/tunnel'
-const columns = ["隧道编号", "隧道名称", "隧道长度", "通风方式", "照明方式", "消防设施", "最近定检", "隧道状态"]
+const columns = ["隧道编号", "隧道名称", "所属路段", "桩号位置", "隧道长度", "通风方式", "照明方式", "消防设施", "限载提示", "关联桶位", "最近定检", "隧道状态"]
 const actions = ["设置限速", "安排维修", "封闭交通"]
 const statuses = ["正常", "限速", "维修", "封闭"]
 const stats = [{"label": "正常隧道", "value": 0}, {"label": "限速隧道", "value": 0}, {"label": "维修隧道", "value": 0}]
