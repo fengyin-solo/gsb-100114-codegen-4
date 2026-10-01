@@ -74,3 +74,14 @@ npm run dev
   `backend/app/routers/<模块>.py`，业务规则在 `backend/app/services/<模块>.py`。
 - 列表接口统一返回 `{ items, total, page, size }`，动作接口统一返回 `{ ok, message }`。
 - 状态流转只允许在 `app/services` 里改，路由层不做业务判断。
+
+## 桩号桶定位器
+
+路面病害入口使用 `/api/stake-buckets` 提供的三阶段协议：
+
+1. `POST /api/stake-buckets/indexes` 建立按道路方向连续排列的桩号桶。
+2. 开启会话后调用 `validate-stake` 校验桩号，未建索引、跳级或倒序切换都会返回 `409`。
+3. 校验通过后调用 `locate` 切换定位，响应同时给出病害列表、巡查详情和桥隧限载提示。
+
+改线使用 `POST /api/stake-buckets/reroutes?road=<路段>` 的 `expected_version` 做版本栅栏；
+旧桶不能覆盖新路线，旧病害保留原桩号快照。桶游标是带版本的不透明字符串，重建索引会兼容旧游标。

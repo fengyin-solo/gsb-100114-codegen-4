@@ -28,6 +28,54 @@ class EntryPayload(BaseModel):
     remark: str | None = None
 
 
+class BucketIndexPayload(BaseModel):
+    """建立或重建桩号桶索引。"""
+
+    road: str
+    expected_version: int | None = None
+    bucket_size: int | None = None
+    cursor: str | None = None
+
+
+class BucketReroutePayload(BaseModel):
+    """现行里程体系改线，旧桶通过版本栅栏拒绝覆盖。"""
+
+    expected_version: int
+    start: str
+    end: str
+    direction: str | None = None
+    bucket_size: int | None = None
+
+
+class BucketSessionPayload(BaseModel):
+    """开启一次受状态栅栏保护的桶巡线定位会话。"""
+
+    cursor: str | None = None
+
+
+class BucketStakePayload(BaseModel):
+    """校验桩号并锁定同桶病害。"""
+
+    stake: str
+    disease_id: int | None = None
+
+
+class BucketLocatePayload(BaseModel):
+    """从已校验桩号切换到定位状态。"""
+
+    disease_id: int | None = None
+    origin_bucket: int | None = None
+
+
+class BucketConclusionPayload(BaseModel):
+    """巡线结论同步到巡查待办、桥隧限载清单和病害台账。"""
+
+    conclusion: str
+    action: str | None = "纳入待办"
+    target_type: str | None = None
+    target_id: int | None = None
+    inspector: str | None = None
+
 
 class RoadSectionEntry(BaseModel):
     """管养路段明细结构。"""
